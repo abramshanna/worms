@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] PlayerInput _playerInput;
     public static GameObject _pivotPoint;
     Transform _playerPosition;
+    static GameObject _activePlayer;
 
     private void Awake()
     {
@@ -31,7 +32,6 @@ public class CameraController : MonoBehaviour
         _pivotPoint.transform.position = _playerPosition.position;
 
         //clamp rotation
-
         float h = _pivotPoint.transform.eulerAngles.x + _playerInput.lookInput.y;
         h = (h > 180) ? h - 360 : h;
 
