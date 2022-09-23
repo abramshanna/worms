@@ -7,9 +7,9 @@ using UnityEngine.UIElements;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] PlayerInput _playerInput;
+    [SerializeField] GameManager _gameManager;
     public static GameObject _pivotPoint;
     Transform _playerPosition;
-    static GameObject _activePlayer;
 
     private void Awake()
     {
@@ -22,8 +22,12 @@ public class CameraController : MonoBehaviour
          _pivotPoint = this.transform.Find("PivotPoint").gameObject;
         }
 
+    }
+
+    private void Start()
+    {
         //should be active player
-        _playerPosition = GameObject.Find("Player").transform;
+        _playerPosition = _gameManager._activePlayer.transform;
     }
 
     private void FixedUpdate()
