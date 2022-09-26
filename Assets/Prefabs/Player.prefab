@@ -277,6 +277,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerInput: {fileID: 0}
+  _gameManager: {fileID: 0}
+  _gunController: {fileID: 3028391952477142630}
   grounded: 0
   layerMask:
     serializedVersion: 2

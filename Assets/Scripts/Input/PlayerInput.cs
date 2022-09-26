@@ -9,6 +9,8 @@ public class PlayerInput : MonoBehaviour
     public bool jumpInput { get; private set; }
     public bool fireInput { get; private set; }
 
+    public bool changeInput { get; private set; }
+
     InputActions _inputActions;
     
     private void OnEnable()
@@ -30,6 +32,9 @@ public class PlayerInput : MonoBehaviour
 
         _inputActions.Player.Fire.performed += SetFire;
         _inputActions.Player.Fire.canceled += SetFire;
+
+        _inputActions.Player.Change.performed += SetChange;
+        _inputActions.Player.Change.canceled += SetChange;
     }
     private void OnDisable()
     {
@@ -45,6 +50,9 @@ public class PlayerInput : MonoBehaviour
 
         _inputActions.Player.Fire.performed -= SetFire;
         _inputActions.Player.Fire.canceled -= SetFire;
+
+        _inputActions.Player.Change.performed -= SetChange;
+        _inputActions.Player.Change.canceled -= SetChange;
 
         //disable actionmap
         _inputActions.Player.Disable();
@@ -71,6 +79,12 @@ public class PlayerInput : MonoBehaviour
     {
         //read value of context and store bool
         fireInput = context.ReadValue<float>() == 1;
+    }
+
+    private void SetChange(InputAction.CallbackContext context)
+    {
+        //read value of context and store bool
+        changeInput = context.ReadValue<float>() == 1;
     }
 }
 

@@ -24,9 +24,9 @@ public class CameraController : MonoBehaviour
 
     }
 
-    private void Start()
+    //set position to active player (can be called to update)
+    public void SetActivePlayerPosition()
     {
-        //should be active player
         _playerPosition = _gameManager._activePlayer.transform;
     }
 
@@ -35,12 +35,12 @@ public class CameraController : MonoBehaviour
         //set pivotpoint to player position
         _pivotPoint.transform.position = _playerPosition.position;
 
-        //clamp rotation
+        //rotate pivot point and clamp rotation up and down
         float h = _pivotPoint.transform.eulerAngles.x + _playerInput.lookInput.y;
         h = (h > 180) ? h - 360 : h;
 
         _pivotPoint.transform.rotation = Quaternion.Euler(Mathf.Clamp(h, -10f, 50f), _pivotPoint.transform.eulerAngles.y + _playerInput.lookInput.x, 0);
-
         
     }
+
 }
