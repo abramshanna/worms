@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class PickupObject : MonoBehaviour
 {
-    private void OnTriggerEnter3D(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
@@ -15,6 +15,6 @@ public abstract class PickupObject : MonoBehaviour
         }
 
     }
-
+   
     public abstract bool OnPickup();
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -27,16 +28,11 @@ public class GameManager : MonoBehaviour
         if (_indexActivePlayer >= _players.Length) {
             _indexActivePlayer = 0;
         }
+
         _activePlayer = _players[_indexActivePlayer];
 
         //call function to set player position for camera
         _cameraController.SetActivePlayerPosition();
-    }
-
-    //update array?
-    public void UpdatePlayers()
-    {
-        
     }
 
     //playerprefs?

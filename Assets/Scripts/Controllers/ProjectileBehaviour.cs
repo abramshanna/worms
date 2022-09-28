@@ -28,6 +28,7 @@ public class ProjectileBehaviour : MonoBehaviour
             if (_hitPlayer._playerHealth <= 0)
             {
                 _hitPlayer.gameObject.SetActive(false);
+
             }
         } 
     }
