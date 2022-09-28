@@ -15,13 +15,16 @@ public class PlayerController : MonoBehaviour
     public bool grounded;
     [SerializeField] private LayerMask layerMask;
 
-    public float jumpHeight;
-    public float movementSpeed;
+    public float _playerHealth;
+    public float _maxHealth;
+    public float _jumpHeight;
+    public float _movementSpeed;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
+        _playerHealth = _maxHealth;
     }
     private void FixedUpdate()
     {
@@ -32,7 +35,7 @@ public class PlayerController : MonoBehaviour
             grounded = Physics.SphereCast(this.transform.position, _capsuleCollider.radius, Vector3.down, out _, _capsuleCollider.height / 2, layerMask);
 
             //jump
-            _playerVelocity.y = _playerInput.jumpInput && grounded ? Mathf.Sqrt(jumpHeight * -3.0f * Physics.gravity.y) : 0;
+            _playerVelocity.y = _playerInput.jumpInput && grounded ? Mathf.Sqrt(_jumpHeight * -3.0f * Physics.gravity.y) : 0;
 
             //get camera direction
             Vector3 forward = CameraController._pivotPoint.transform.forward;
@@ -42,7 +45,7 @@ public class PlayerController : MonoBehaviour
             forward.y = 0;
             right.y = 0;
 
-            //normalize vector again
+            //normalize vector
             forward.Normalize();
             right.Normalize();
 
@@ -50,7 +53,7 @@ public class PlayerController : MonoBehaviour
             Vector3 direction = forward * _playerInput.moveInput.y + right * _playerInput.moveInput.x;
 
             //move
-            _playerVelocity = new Vector3(direction.x * movementSpeed, _playerVelocity.y, direction.z * movementSpeed) * _rigidbody.mass;
+            _playerVelocity = new Vector3(direction.x * _movementSpeed, _playerVelocity.y, direction.z * _movementSpeed) * _rigidbody.mass;
 
             //rotate player
             if (direction != Vector3.zero)

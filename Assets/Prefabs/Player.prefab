@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a039464bfe6024b478f5c48cfca1dbd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerInput: {fileID: 0}
   _spawnPoint: {fileID: 3028391954229459185}
   _projectile: {fileID: 2529982052130047956, guid: 9e6d602120bbddf409a9951ad0141dfb, type: 3}
   _shootingSpeed: 10
@@ -283,8 +282,9 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
-  jumpHeight: 20
-  movementSpeed: 10
+  _maxHealth: 100
+  _jumpHeight: 50
+  _movementSpeed: 10
 --- !u!1 &3028391954229459184
 GameObject:
   m_ObjectHideFlags: 0
