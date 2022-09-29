@@ -13,8 +13,6 @@ public abstract class PickupObject : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-
     }
-   
     public abstract bool OnPickup();
 }

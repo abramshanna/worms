@@ -3,59 +3,71 @@ using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
 {
-    //vectors can be accessed but only set privately
+    public static PlayerInput instance;
     public Vector2 moveInput { get; private set; }
     public Vector2 lookInput { get; private set; }
     public bool jumpInput { get; private set; }
     public bool fireInput { get; private set; }
+    public bool adsInput { get; private set; }
 
-    public bool changeInput { get; private set; }
+    InputActions inputActions;
 
-    InputActions _inputActions;
-    
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+    }
+
     private void OnEnable()
     {
-        _inputActions = new InputActions();
+        inputActions = new InputActions();
 
         //enable actionmap
-        _inputActions.Player.Enable();
+        inputActions.Player.Enable();
 
         //subscribe to action input events
-        _inputActions.Player.Move.performed += SetMove;
-        _inputActions.Player.Move.canceled += SetMove;
+        inputActions.Player.Move.performed += SetMove;
+        inputActions.Player.Move.canceled += SetMove;
 
-        _inputActions.Player.Look.performed += SetLook;
-        _inputActions.Player.Look.canceled += SetLook;
+        inputActions.Player.Look.performed += SetLook;
+        inputActions.Player.Look.canceled += SetLook;
 
-        _inputActions.Player.Jump.performed += SetJump;
-        _inputActions.Player.Jump.canceled += SetJump;
+        inputActions.Player.Jump.performed += SetJump;
+        inputActions.Player.Jump.canceled += SetJump;
 
-        _inputActions.Player.Fire.performed += SetFire;
-        _inputActions.Player.Fire.canceled += SetFire;
+        inputActions.Player.Fire.performed += SetFire;
+        inputActions.Player.Fire.canceled += SetFire;
 
-        _inputActions.Player.Change.performed += SetChange;
-        _inputActions.Player.Change.canceled += SetChange;
+        inputActions.Player.Ads.performed += SetAds;
+        inputActions.Player.Ads.canceled += SetAds;
     }
     private void OnDisable()
     {
         //unsubscribe to action input events
-        _inputActions.Player.Move.performed -= SetMove;
-        _inputActions.Player.Move.canceled -= SetMove;
+        inputActions.Player.Move.performed -= SetMove;
+        inputActions.Player.Move.canceled -= SetMove;
 
-        _inputActions.Player.Look.performed -= SetLook;
-        _inputActions.Player.Look.canceled -= SetLook;
+        inputActions.Player.Look.performed -= SetLook;
+        inputActions.Player.Look.canceled -= SetLook;
 
-        _inputActions.Player.Jump.performed -= SetJump;
-        _inputActions.Player.Jump.canceled -= SetJump;
+        inputActions.Player.Jump.performed -= SetJump;
+        inputActions.Player.Jump.canceled -= SetJump;
 
-        _inputActions.Player.Fire.performed -= SetFire;
-        _inputActions.Player.Fire.canceled -= SetFire;
+        inputActions.Player.Fire.performed -= SetFire;
+        inputActions.Player.Fire.canceled -= SetFire;
 
-        _inputActions.Player.Change.performed -= SetChange;
-        _inputActions.Player.Change.canceled -= SetChange;
+        inputActions.Player.Ads.performed -= SetAds;
+        inputActions.Player.Ads.canceled -= SetAds;
 
         //disable actionmap
-        _inputActions.Player.Disable();
+        inputActions.Player.Disable();
     }
 
     private void SetMove(InputAction.CallbackContext context)
@@ -81,10 +93,10 @@ public class PlayerInput : MonoBehaviour
         fireInput = context.ReadValue<float>() == 1;
     }
 
-    private void SetChange(InputAction.CallbackContext context)
+    private void SetAds(InputAction.CallbackContext context)
     {
         //read value of context and store bool
-        changeInput = context.ReadValue<float>() == 1;
+        adsInput = context.ReadValue<float>() == 1;
     }
 }
 

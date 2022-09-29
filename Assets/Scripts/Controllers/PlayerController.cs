@@ -6,71 +6,99 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] PlayerInput _playerInput;
-    [SerializeField] GameManager _gameManager;
-    [SerializeField] GunController _gunController;
-    Rigidbody _rigidbody;
-    CapsuleCollider _capsuleCollider;
-    Vector3 _playerVelocity;
-    public bool grounded;
+    [SerializeField] GunController gunController;
     [SerializeField] private LayerMask layerMask;
+    new Rigidbody rigidbody;
+    CapsuleCollider capsuleCollider;
+    Vector3 playerVelocity;
+    public bool grounded;
 
-    public float _playerHealth;
-    public float _maxHealth;
-    public float _jumpHeight;
-    public float _movementSpeed;
+    public float Health { get; private set; }
+    public bool finishedTurn { get
+        {
+            return gunController.fireShots <= 0;
+        }
+    }
+
+    [SerializeField] float MaxHealth;
+    [SerializeField] float JumpHeight;
+    [SerializeField] float MovementSpeed;
 
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _capsuleCollider = GetComponent<CapsuleCollider>();
-        _playerHealth = _maxHealth;
+        rigidbody = GetComponentInChildren<Rigidbody>();
+        capsuleCollider = GetComponentInChildren<CapsuleCollider>();
+        Health = MaxHealth;
     }
     private void FixedUpdate()
     {
-        if (_gameManager._activePlayer == this.gameObject)
+        if (GameManager.instance.activePlayer != this)
         {
+            return;
+        }
+        if (GameManager.instance.gameState != GameManager.GameState.Turn && GameManager.instance.gameState != GameManager.GameState.Postturn)
+        {
+            return;
+        }
+        //groundcheck spherecast returns bool
+        grounded = Physics.SphereCast(this.transform.position, capsuleCollider.radius, Vector3.down, out _, capsuleCollider.height / 2, layerMask);
 
-            //groundcheck spherecast returns bool
-            grounded = Physics.SphereCast(this.transform.position, _capsuleCollider.radius, Vector3.down, out _, _capsuleCollider.height / 2, layerMask);
+        //jump
+        playerVelocity.y = PlayerInput.instance.jumpInput && grounded ? Mathf.Sqrt(JumpHeight * -3.0f * Physics.gravity.y) : 0;
 
-            //jump
-            _playerVelocity.y = _playerInput.jumpInput && grounded ? Mathf.Sqrt(_jumpHeight * -3.0f * Physics.gravity.y) : 0;
+        //get camera direction
+        Vector3 forward = CameraController.instance._pivotPoint.transform.forward;
+        Vector3 right = CameraController.instance._pivotPoint.transform.right;
 
-            //get camera direction
-            Vector3 forward = CameraController._pivotPoint.transform.forward;
-            Vector3 right = CameraController._pivotPoint.transform.right;
+        //ignore rotation of camera
+        forward.y = 0;
+        right.y = 0;
 
-            //ignore rotation of camera
-            forward.y = 0;
-            right.y = 0;
+        //normalize vector
+        forward.Normalize();
+        right.Normalize();
 
-            //normalize vector
-            forward.Normalize();
-            right.Normalize();
+        //set direction
+        Vector3 direction = forward * PlayerInput.instance.moveInput.y + right * PlayerInput.instance.moveInput.x;
 
-            //set direction
-            Vector3 direction = forward * _playerInput.moveInput.y + right * _playerInput.moveInput.x;
-
-            //move
-            _playerVelocity = new Vector3(direction.x * _movementSpeed, _playerVelocity.y, direction.z * _movementSpeed) * _rigidbody.mass;
-
+        if (PlayerInput.instance.adsInput)
+        {
+            //rotate player
+            this.transform.rotation = Quaternion.LookRotation(forward);
+        }
+        else
+        {
             //rotate player
             if (direction != Vector3.zero)
             {
                 this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, Quaternion.LookRotation(direction), 5f);
             }
-
-            //add force
-            _rigidbody.AddForce(_playerVelocity);
-
-
-            if (_playerInput.fireInput)
-            {
-                _gunController.PlayerFire();
-            }
         }
 
+        //move
+        playerVelocity = new Vector3(direction.x * MovementSpeed, playerVelocity.y, direction.z * MovementSpeed) * rigidbody.mass;
+
+        //add force
+        rigidbody.AddForce(playerVelocity);
+
+        if (PlayerInput.instance.fireInput)
+        {
+            gunController.PlayerFire();
+        }
+    }
+    public void StartTurn()
+    {
+        gunController.Reload();
+    }
+
+    public void TakeDamage(float damage)
+    {
+        Health -= damage;
+
+        if (Health <= 0)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
 }

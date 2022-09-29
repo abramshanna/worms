@@ -6,41 +6,43 @@ using UnityEngine.UIElements;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] PlayerInput _playerInput;
-    [SerializeField] GameManager _gameManager;
-    public static GameObject _pivotPoint;
-    Transform _playerPosition;
+    public GameObject _pivotPoint;
+    public static CameraController instance;
+    Camera _camera;
 
     private void Awake()
     {
-        if (_pivotPoint != null)
+        if (instance == null)
         {
-            GameObject.Destroy(this);
+            instance = this;
+            
         }
         else
         {
-         _pivotPoint = this.transform.Find("PivotPoint").gameObject;
+            GameObject.Destroy(this.gameObject);
+            return;
         }
+        
+        _pivotPoint = this.transform.Find("PivotPoint").gameObject;
+        _camera = GetComponentInChildren<Camera>();
 
     }
 
-    //set position to active player (can be called to update)
-    public void SetActivePlayerPosition()
+    private void Update()
     {
-        _playerPosition = _gameManager._activePlayer.transform;
-    }
+        _camera.fieldOfView = PlayerInput.instance.adsInput ? 30f : 60f;
 
-    private void FixedUpdate()
-    {
         //set pivotpoint to player position
-        _pivotPoint.transform.position = _playerPosition.position;
+        _pivotPoint.transform.position = GameManager.instance.activePlayer.transform.position;
 
         //rotate pivot point and clamp rotation up and down
-        float h = _pivotPoint.transform.eulerAngles.x + _playerInput.lookInput.y;
+        float h = _pivotPoint.transform.eulerAngles.x + PlayerInput.instance.lookInput.y;
         h = (h > 180) ? h - 360 : h;
 
-        _pivotPoint.transform.rotation = Quaternion.Euler(Mathf.Clamp(h, -10f, 50f), _pivotPoint.transform.eulerAngles.y + _playerInput.lookInput.x, 0);
+        _pivotPoint.transform.rotation = Quaternion.Euler(Mathf.Clamp(h, -10f, 50f), _pivotPoint.transform.eulerAngles.y + PlayerInput.instance.lookInput.x, 0);
         
     }
+
+
 
 }

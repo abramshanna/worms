@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Change",
+                    "name": "Aim",
                     "type": "Button",
                     "id": "6034cefe-15b9-4537-a612-2c79f396e2d1",
                     "expectedControlType": "Button",
@@ -143,11 +143,11 @@
                 {
                     "name": "",
                     "id": "1bcdb17c-3d85-4bf0-bdc7-68af103696bb",
-                    "path": "<Keyboard>/v",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Change",
+                    "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
