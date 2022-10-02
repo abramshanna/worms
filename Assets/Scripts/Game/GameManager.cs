@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -113,7 +114,7 @@ public class GameManager : MonoBehaviour
         {
             case GameState.Menu:
                 //start game with number of players
-                StartNewGame(4);
+                StartNewGame(MainMenu.playerCount);
                 break;
             case GameState.Pregame:
                 gameState = GameState.Preturn;
@@ -123,7 +124,6 @@ public class GameManager : MonoBehaviour
                 {
                     activePlayer.StartTurn();
                     gameState = GameState.Turn;
-                    //save current time for start of the turn
                     waitUntil = Time.time + 15f;
                 }
                 break;
@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case GameState.Postturn:
-                if (waitUntil <= Time.time) //timer
+                if (waitUntil <= Time.time)
                 {
                     ChangeActivePlayer();
                     gameState = GameState.Preturn;
@@ -149,6 +149,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Postgame:
                 gameState = GameState.Menu;
+                SceneManager.LoadScene(0);
                 break;
         }
     }

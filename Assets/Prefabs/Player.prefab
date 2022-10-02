@@ -151,7 +151,7 @@ MonoBehaviour:
     m_Bits: 64
   grounded: 0
   MaxHealth: 100
-  JumpHeight: 50
+  JumpHeight: 100
   MovementSpeed: 10
 --- !u!54 &8243924694929339027
 Rigidbody:
