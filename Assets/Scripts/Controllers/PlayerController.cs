@@ -47,8 +47,8 @@ public class PlayerController : MonoBehaviour
         playerVelocity.y = PlayerInput.instance.jumpInput && grounded ? Mathf.Sqrt(JumpHeight * -3.0f * Physics.gravity.y) : 0;
 
         //get camera direction
-        Vector3 forward = CameraController.instance._pivotPoint.transform.forward;
-        Vector3 right = CameraController.instance._pivotPoint.transform.right;
+        Vector3 forward = CameraController.instance.pivotPoint.transform.forward;
+        Vector3 right = CameraController.instance.pivotPoint.transform.right;
 
         //ignore rotation of camera
         forward.y = 0;
