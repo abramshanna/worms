@@ -33,7 +33,10 @@ public class CameraController : MonoBehaviour
         camera.fieldOfView = PlayerInput.instance.adsInput ? 30f : 60f;
 
         //set pivotpoint to player position
-        pivotPoint.transform.position = GameManager.instance.activePlayer.transform.position;
+        if (GameManager.instance.activePlayer != null)
+        {
+            pivotPoint.transform.position = GameManager.instance.activePlayer.transform.position;
+        }
 
         //rotate pivot point and clamp rotation up and down
         float h = pivotPoint.transform.eulerAngles.x + PlayerInput.instance.lookInput.y;

@@ -64,7 +64,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Aim"",
+                    ""name"": ""Ads"",
                     ""type"": ""Button"",
                     ""id"": ""6034cefe-15b9-4537-a612-2c79f396e2d1"",
                     ""expectedControlType"": ""Button"",
@@ -169,7 +169,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Aim"",
+                    ""action"": ""Ads"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -184,7 +184,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
-        m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
+        m_Player_Ads = m_Player.FindAction("Ads", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -248,7 +248,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Fire;
-    private readonly InputAction m_Player_Aim;
+    private readonly InputAction m_Player_Ads;
     public struct PlayerActions
     {
         private @InputActions m_Wrapper;
@@ -257,7 +257,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
-        public InputAction Ads => m_Wrapper.m_Player_Aim;
+        public InputAction @Ads => m_Wrapper.m_Player_Ads;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -279,9 +279,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Fire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
-                Ads.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
-                Ads.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
-                Ads.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
+                @Ads.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAds;
+                @Ads.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAds;
+                @Ads.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAds;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -298,9 +298,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Fire.started += instance.OnFire;
                 @Fire.performed += instance.OnFire;
                 @Fire.canceled += instance.OnFire;
-                Ads.started += instance.OnAim;
-                Ads.performed += instance.OnAim;
-                Ads.canceled += instance.OnAim;
+                @Ads.started += instance.OnAds;
+                @Ads.performed += instance.OnAds;
+                @Ads.canceled += instance.OnAds;
             }
         }
     }
@@ -311,6 +311,6 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
-        void OnAim(InputAction.CallbackContext context);
+        void OnAds(InputAction.CallbackContext context);
     }
 }
