@@ -76,22 +76,36 @@ public class GameManager : MonoBehaviour
 
     public void ChangeActivePlayer()
     {
+        //save player for check
+        var previousPlayer = players[activePlayerIndex];
 
         while (true)
         {
+            //next player
             activePlayerIndex++;
 
+            //if index out of bounds back to 0
             if (activePlayerIndex >= players.Count) activePlayerIndex = 0;
 
+            //if player not dead, set to active player
             if (players[activePlayerIndex].gameObject.activeSelf)
             {
                 activePlayer = players[activePlayerIndex];
+
+                //if one player left, player is same as previous player, end game
+                if (activePlayer == previousPlayer)
+                {
+                    gameState = GameState.Postgame;
+                    return;
+                }
+
+                gameState = GameState.Preturn;
                 break;
             }  
             
         }
-        
-        //end game if one player?
+
+
     }
 
     private void Awake()
@@ -143,7 +157,6 @@ public class GameManager : MonoBehaviour
                 if (waitUntil <= Time.time)
                 {
                     ChangeActivePlayer();
-                    gameState = GameState.Preturn;
                     waitUntil = Time.time + 5f;
                 }
                 break;
