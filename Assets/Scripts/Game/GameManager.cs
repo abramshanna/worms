@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public PlayerController activePlayer;
     List<PlayerController> players = new List<PlayerController>();
     int activePlayerIndex;
-    public GameObject playerPrefab;
+    [SerializeField] GameObject playerPrefab;
     float waitUntil;
 
     public GameState gameState;

@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     new Rigidbody rigidbody;
     CapsuleCollider capsuleCollider;
     Vector3 playerVelocity;
-    public bool grounded;
+    bool grounded;
 
     public float Health { get; private set; }
     public bool finishedTurn { get

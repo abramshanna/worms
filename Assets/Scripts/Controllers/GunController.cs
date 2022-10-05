@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class GunController : MonoBehaviour
 {
-    public Transform spawnPoint;
-    public GameObject projectilePrefab;
+    [SerializeField] Transform spawnPoint;
+    [SerializeField] GameObject projectilePrefab;
     [SerializeField] float shootingSpeed;
     float fireTime;
-    public int fireShots;
-    int maxShots = 3;
+    public float fireShots;
+    float maxShots = 3;
     private void Start()
     {
         Reload();

@@ -5,7 +5,7 @@ using UnityEngine;
 public class ProjectileBehaviour : MonoBehaviour
 {
     float lifeTime = 10;
-    public int damage = 25;
+    float damage = 25;
 
     private void Awake()
     {
