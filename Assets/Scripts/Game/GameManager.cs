@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Postgame:
                 gameState = GameState.Menu;
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene(2);
                 break;
         }
     }

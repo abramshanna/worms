@@ -27,6 +27,10 @@ public class MainMenu : MonoBehaviour
         playerCount = players;
         SceneManager.LoadScene(1);
     }
+    public void ReturnGame()
+    {
+        SceneManager.LoadScene(0);
+    }
     public void QuitGame()
     {
         Application.Quit();

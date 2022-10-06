@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+
         //groundcheck spherecast returns bool
         grounded = Physics.SphereCast(this.transform.position, capsuleCollider.radius, Vector3.down, out _, capsuleCollider.height / 2, layerMask);
 
