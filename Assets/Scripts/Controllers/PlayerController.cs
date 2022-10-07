@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
         grounded = Physics.OverlapSphere(transform.position + (Vector3.up * capsuleCollider.radius * 0.99f), capsuleCollider.radius, layerMask).Length != 0;
 
         //jump
-        playerVelocity.y = PlayerInput.instance.jumpInput && grounded ? Mathf.Sqrt(JumpHeight * -3.0f * Physics.gravity.y) : 0;
+        playerVelocity.y = PlayerInput.instance.JumpInput && grounded ? Mathf.Sqrt(JumpHeight * -3.0f * Physics.gravity.y) : 0;
 
         //get camera direction
         Vector3 forward = CameraController.instance.pivotPoint.transform.forward;
@@ -60,9 +60,10 @@ public class PlayerController : MonoBehaviour
         right.Normalize();
 
         //set direction
-        Vector3 direction = forward * PlayerInput.instance.moveInput.y + right * PlayerInput.instance.moveInput.x;
+        Vector3 direction = forward * PlayerInput.instance.MoveInput.y + right * PlayerInput.instance.MoveInput.x;
 
-        if (PlayerInput.instance.adsInput)
+        //aim down sights adjustment
+        if (PlayerInput.instance.AdsInput)
         {
             //rotate player
             this.transform.rotation = Quaternion.LookRotation(forward);
@@ -82,7 +83,7 @@ public class PlayerController : MonoBehaviour
         //add force
         rigidbody.AddForce(playerVelocity);
 
-        if (PlayerInput.instance.fireInput)
+        if (PlayerInput.instance.FireInput)
         {
             gunController.PlayerFire();
         }

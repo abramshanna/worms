@@ -4,11 +4,11 @@ using UnityEngine.InputSystem;
 public class PlayerInput : MonoBehaviour
 {
     public static PlayerInput instance;
-    public Vector2 moveInput { get; private set; }
-    public Vector2 lookInput { get; private set; }
-    public bool jumpInput { get; private set; }
-    public bool fireInput { get; private set; }
-    public bool adsInput { get; private set; }
+    public Vector2 MoveInput { get; private set; }
+    public Vector2 LookInput { get; private set; }
+    public bool JumpInput { get; private set; }
+    public bool FireInput { get; private set; }
+    public bool AdsInput { get; private set; }
 
     InputActions inputActions;
 
@@ -73,30 +73,30 @@ public class PlayerInput : MonoBehaviour
     private void SetMove(InputAction.CallbackContext context)
     {
         //read value of context and store vector2
-        moveInput = context.ReadValue<Vector2>();
+        MoveInput = context.ReadValue<Vector2>();
     }
     private void SetLook(InputAction.CallbackContext context)
     {
         //read value of context and store vector2
-        lookInput = context.ReadValue<Vector2>();
+        LookInput = context.ReadValue<Vector2>();
     }
 
     private void SetJump(InputAction.CallbackContext context)
     {
         //read value of context and store bool
-        jumpInput = context.ReadValue<float>() == 1;
+        JumpInput = context.ReadValue<float>() == 1;
     }
 
     private void SetFire(InputAction.CallbackContext context)
     {
         //read value of context and store bool
-        fireInput = context.ReadValue<float>() == 1;
+        FireInput = context.ReadValue<float>() == 1;
     }
 
     private void SetAds(InputAction.CallbackContext context)
     {
         //read value of context and store bool
-        adsInput = context.ReadValue<float>() == 1;
+        AdsInput = context.ReadValue<float>() == 1;
     }
 }
 

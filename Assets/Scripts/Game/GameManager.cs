@@ -26,6 +26,19 @@ public class GameManager : MonoBehaviour
         Postturn,
         Postgame
     }
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+
+        }
+        else
+        {
+            GameObject.Destroy(this.gameObject);
+            return;
+        }
+    }
 
     public void StartNewGame(int playerCount)
     {
@@ -106,20 +119,6 @@ public class GameManager : MonoBehaviour
         }
 
 
-    }
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-
-        }
-        else
-        {
-            GameObject.Destroy(this.gameObject);
-            return;
-        }
     }
 
     private void Update()

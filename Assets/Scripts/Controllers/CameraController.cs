@@ -30,7 +30,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        camera.fieldOfView = PlayerInput.instance.adsInput ? 30f : 60f;
+        camera.fieldOfView = PlayerInput.instance.AdsInput ? 30f : 60f;
 
         //set pivotpoint to player position
         if (GameManager.instance.activePlayer != null)
@@ -39,10 +39,10 @@ public class CameraController : MonoBehaviour
         }
 
         //rotate pivot point and clamp rotation up and down
-        float h = pivotPoint.transform.eulerAngles.x + PlayerInput.instance.lookInput.y;
+        float h = pivotPoint.transform.eulerAngles.x + PlayerInput.instance.LookInput.y;
         h = (h > 180) ? h - 360 : h;
 
-        pivotPoint.transform.rotation = Quaternion.Euler(Mathf.Clamp(h, -10f, 50f), pivotPoint.transform.eulerAngles.y + PlayerInput.instance.lookInput.x, 0);
+        pivotPoint.transform.rotation = Quaternion.Euler(Mathf.Clamp(h, -10f, 50f), pivotPoint.transform.eulerAngles.y + PlayerInput.instance.LookInput.x, 0);
         
     }
 
