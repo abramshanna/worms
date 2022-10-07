@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //groundcheck spherecast returns bool
-        grounded = Physics.SphereCast(this.transform.position, capsuleCollider.radius, Vector3.down, out _, capsuleCollider.height / 2, layerMask);
+        grounded = Physics.OverlapSphere(transform.position + (Vector3.up * capsuleCollider.radius * 0.99f), capsuleCollider.radius, layerMask).Length != 0;
 
         //jump
         playerVelocity.y = PlayerInput.instance.jumpInput && grounded ? Mathf.Sqrt(JumpHeight * -3.0f * Physics.gravity.y) : 0;

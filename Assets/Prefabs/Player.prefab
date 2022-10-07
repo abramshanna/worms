@@ -151,7 +151,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   MaxHealth: 100
-  JumpHeight: 100
+  JumpHeight: 5000
   MovementSpeed: 10
 --- !u!54 &8243924694929339027
 Rigidbody:
