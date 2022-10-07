@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        //groundcheck spherecast returns bool
+        //groundcheck returns bool
         grounded = Physics.OverlapSphere(transform.position + (Vector3.up * capsuleCollider.radius * 0.99f), capsuleCollider.radius, layerMask).Length != 0;
 
         //jump
